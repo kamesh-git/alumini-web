@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { Link as RouterLink } from 'react-router-dom';
+import LoginContextProvider from '../../context/LoginContextProvider';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
@@ -25,6 +27,12 @@ export default function Navbar(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuopen = Boolean(anchorEl);
+    const { setLogin } = React.useContext(LoginContextProvider)
+
+    const handleLogout = () => {
+        setLogin(false)
+        menuhandleClose()
+    }
     const menuhandleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -41,18 +49,6 @@ export default function Navbar(props) {
             <Typography variant="h6" sx={{ my: 2 }}>
                 MUI
             </Typography>
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={menuopen}
-                onClose={menuhandleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-            >
-                <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
-                <MenuItem onClick={menuhandleClose}>Logout</MenuItem>
-            </Menu>
             <Divider />
             <List>
                 {navItems.map((item) => (
@@ -62,6 +58,18 @@ export default function Navbar(props) {
                         </ListItemButton>
                     </ListItem>
                 ))}
+                <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/profile'}>
+                    <ListItem disablePadding>
+                        <ListItemButton sx={{ textAlign: 'center' }}>
+                            <ListItemText primary={'Profile'} />
+                        </ListItemButton>
+                    </ListItem>
+                </RouterLink>
+                <ListItem disablePadding>
+                    <ListItemButton sx={{ textAlign: 'center' }}>
+                        <ListItemText primary={'Logout'} />
+                    </ListItemButton>
+                </ListItem>
             </List>
         </Box>
     );
@@ -91,9 +99,11 @@ export default function Navbar(props) {
                     </IconButton>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
-                            </Button>
+                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
+                                <Button key={item} sx={{ color: '#fff' }}>
+                                    {item}
+                                </Button>
+                            </RouterLink>
                         ))}
                         <Button
                             id="basic-button"
@@ -115,8 +125,12 @@ export default function Navbar(props) {
                                 'aria-labelledby': 'basic-button',
                             }}
                         >
-                            <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
-                            <MenuItem onClick={menuhandleClose}>Logout</MenuItem>
+                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/Profile'}>
+                                <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
+                            </RouterLink>
+                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/'}>
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                            </RouterLink>
                         </Menu>
                     </Box>
                 </Toolbar>

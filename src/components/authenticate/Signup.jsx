@@ -19,19 +19,6 @@ import { doc, setDoc } from 'firebase/firestore';
 import LoginContextProvider from '../../context/LoginContextProvider';
 
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
@@ -90,7 +77,7 @@ export default function Signup() {
                     id={item.name}
                     label={item.label}
                     name={item.name}
-                    // autoComplete={item.name}
+                    autoComplete={false}
                     autoFocus
                     variant='standard'
                   />
@@ -116,7 +103,6 @@ export default function Signup() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

@@ -50,7 +50,7 @@ export default function Navbar(props) {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2 }}>
-                MUI
+                DoIE
             </Typography>
             <Divider />
             <List>
@@ -70,7 +70,7 @@ export default function Navbar(props) {
                         </ListItemButton>
                     </ListItem>
                 </RouterLink>
-                <ListItem disablePadding>
+                <ListItem onClick={handleLogout} disablePadding>
                     <ListItemButton sx={{ textAlign: 'center' }}>
                         <ListItemText primary={'Logout'} />
                     </ListItemButton>
@@ -91,7 +91,7 @@ export default function Navbar(props) {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
                     >
-                        MUI
+                        DoIE
                     </Typography>
                     <IconButton
                         color="inherit"

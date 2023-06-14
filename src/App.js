@@ -21,10 +21,8 @@ const App = () => {
     onAuthStateChanged(auth,(user) => {
       if(user){
         getDoc(doc(db,'users',user.uid)).then(docSnap => {
-          setUserdetails(docSnap.data())
+          setUserdetails({...docSnap.data(),user_id:user.uid})
           setLogin(true)
-          console.log(user.uid)
-          console.log(docSnap.data())
         })
       }
       else{

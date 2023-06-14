@@ -14,6 +14,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link as RouterLink } from 'react-router-dom'
 import LoginContextProvider from '../../context/LoginContextProvider';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import useFirebase from '../../context/useFirebase';
 
 function Copyright(props) {
   return (
@@ -34,14 +36,18 @@ const defaultTheme = createTheme();
 
 export default function Signin() {
   const { setLogin } = useContext(LoginContextProvider)
+  const { auth } = useFirebase()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    setLogin(true)
+    const email = data.get('email')
+    const password = data.get('password')
+    signInWithEmailAndPassword(auth, email, password).then(user => {
+      if(user){
+        setLogin(true)
+      }
+    })
+    
   };
 
   return (

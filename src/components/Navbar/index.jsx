@@ -18,6 +18,8 @@ import { Avatar, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import LoginContextProvider from '../../context/LoginContextProvider';
+import { signOut } from 'firebase/auth'
+import useFirebase from '../../context/useFirebase';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
@@ -28,9 +30,10 @@ export default function Navbar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuopen = Boolean(anchorEl);
     const { setLogin } = React.useContext(LoginContextProvider)
+    const { auth } = useFirebase()
 
     const handleLogout = () => {
-        setLogin(false)
+        signOut(auth)
         menuhandleClose()
     }
     const menuhandleClick = (event) => {
@@ -52,11 +55,13 @@ export default function Navbar(props) {
             <Divider />
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={item} />
-                        </ListItemButton>
-                    </ListItem>
+                    <RouterLink key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
+                        <ListItem disablePadding>
+                            <ListItemButton sx={{ textAlign: 'center' }}>
+                                <ListItemText primary={item} />
+                            </ListItemButton>
+                        </ListItem>
+                    </RouterLink>
                 ))}
                 <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/profile'}>
                     <ListItem disablePadding>
@@ -99,8 +104,8 @@ export default function Navbar(props) {
                     </IconButton>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
-                                <Button key={item} sx={{ color: '#fff' }}>
+                            <RouterLink key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
+                                <Button sx={{ color: '#fff' }}>
                                     {item}
                                 </Button>
                             </RouterLink>

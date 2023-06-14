@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import Profile from './components/Profile'
@@ -6,10 +6,36 @@ import Signin from './components/authenticate/Signin'
 import Signup from './components/authenticate/Signup'
 import LoginContextProvider from './context/LoginContextProvider'
 import Navbar from './components/Navbar'
+import { onAuthStateChanged } from 'firebase/auth'
+import useFirebase from './context/useFirebase'
+import Checkout from './components/Checkouttest/Checkout'
+import { doc, getDoc } from 'firebase/firestore'
 
 const App = () => {
 
-  const [login, setLogin] = useState(true)
+  const [login, setLogin] = useState(false)
+  const [userdetails, setUserdetails] = useState({})
+  const {auth,db} = useFirebase()
+
+  useEffect(() => {
+    onAuthStateChanged(auth,(user) => {
+      if(user){
+        getDoc(doc(db,'users',user.uid)).then(docSnap => {
+          setUserdetails(docSnap.data())
+          setLogin(true)
+          console.log(user.uid)
+          console.log(docSnap.data())
+        })
+      }
+      else{
+        setLogin(false)
+      }
+    })
+  },[])
+
+  useEffect(() => {
+    console.log(userdetails)
+  },[userdetails])
   return (
     <>
       <LoginContextProvider.Provider value={{ setLogin }}>
@@ -17,7 +43,8 @@ const App = () => {
           <>
             <Navbar />
             <Routes>
-              <Route path='/profile' element={<Profile />} />
+              <Route path='/profile' element={<Profile userdetails={userdetails} />} />
+              <Route path='/checkouttest' element={<Checkout />} />
               <Route path='*' element={<Home />} />
             </Routes>
           </>

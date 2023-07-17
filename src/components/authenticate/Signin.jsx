@@ -86,18 +86,11 @@ export default function Signin() {
             >
               Sign In
             </Button>
-            <Grid container>
-              <Grid item xs>
+            <Grid container justifyContent={'center'}>
+              <Grid item>
                 <Link href='#' variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
-              <Grid item>
-                <RouterLink to={'/signup'}>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </RouterLink>
               </Grid>
             </Grid>
           </Box>

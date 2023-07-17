@@ -13,48 +13,50 @@ import { doc, getDoc } from 'firebase/firestore'
 
 const App = () => {
 
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(2)
   const [userdetails, setUserdetails] = useState({})
-  const {auth,db} = useFirebase()
+  const { auth, db } = useFirebase()
 
   useEffect(() => {
-    onAuthStateChanged(auth,(user) => {
-      if(user){
-        getDoc(doc(db,'users',user.uid)).then(docSnap => {
-          setUserdetails({...docSnap.data(),user_id:user.uid})
-          setLogin(true)
-        })
-      }
-      else{
-        setLogin(false)
-      }
-    })
-  },[])
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     getDoc(doc(db, 'users', user.uid)).then(docSnap => {
+    //       if (docSnap.data()) {
+    //         setUserdetails({ ...docSnap.data(), user_id: user.uid })
+    //         setLogin(2)
+    //       }
+    //       setLogin(1)
+    //     })
+    //   }
+    //   else {
+    //     setLogin(0)
+    //   }
+    // })
+  }, [])
 
   useEffect(() => {
     console.log(userdetails)
-  },[userdetails])
+  }, [userdetails])
   return (
     <>
       <LoginContextProvider.Provider value={{ setLogin }}>
-        {login ?
-          <>
-            <Navbar />
-            <Routes>
-              <Route path='/profile' element={<Profile userdetails={userdetails} />} />
-              <Route path='/checkouttest' element={<Checkout />} />
-              <Route path='*' element={<Home />} />
-            </Routes>
-          </>
+        {login == 0 ?
+          <Signin />
           :
-          <Routes>
-            <Route path='/signup' element={<Signup />} />
-            <Route path='*' element={<Signin />} />
-          </Routes>
+          login == 1 ?
+            <Signup />
+            :
+            <>
+              <Navbar />
+              <Routes>
+                <Route path='/profile' element={<Profile userdetails={userdetails} />} />
+                <Route path='/checkouttest' element={<Checkout />} />
+                <Route path='*' element={<Home />} />
+              </Routes>
+            </>
         }
       </LoginContextProvider.Provider>
     </>
   )
 }
-
 export default App

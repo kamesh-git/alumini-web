@@ -90,17 +90,8 @@ export default function Signup() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign up
+              Register
             </Button>
-            <Grid container justifyContent={'center'}>
-              <Grid item>
-                <RouterLink to={'/signin'}>
-                  <Link href="#" variant="body2">
-                    {"Already an User? Sign In"}
-                  </Link>
-                </RouterLink>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

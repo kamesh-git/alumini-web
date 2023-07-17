@@ -47,15 +47,41 @@ export default function Navbar(props) {
         setMobileOpen((prevState) => !prevState);
     };
 
+
+
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-                DoIE
-            </Typography>
+        <Box sx={{ textAlign: 'center' }}>
+            <Button
+                id="basic-button"
+                aria-controls={menuopen ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={menuopen ? 'true' : undefined}
+                onClick={menuhandleClick}
+            >
+                <Avatar sx={{ bgcolor: 'primary.main' }}>
+                    <AccountCircleOutlinedIcon />
+                </Avatar>
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={menuopen}
+                onClose={menuhandleClose}
+                MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                }}
+            >
+                <RouterLink onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/Profile'}>
+                    <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
+                </RouterLink>
+                <RouterLink onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/'}>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </RouterLink>
+            </Menu>
             <Divider />
             <List>
                 {navItems.map((item) => (
-                    <RouterLink key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
+                    <RouterLink onClick={handleDrawerToggle} key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
                         <ListItem disablePadding>
                             <ListItemButton sx={{ textAlign: 'center' }}>
                                 <ListItemText primary={item} />
@@ -63,18 +89,7 @@ export default function Navbar(props) {
                         </ListItem>
                     </RouterLink>
                 ))}
-                <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/profile'}>
-                    <ListItem disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }}>
-                            <ListItemText primary={'Profile'} />
-                        </ListItemButton>
-                    </ListItem>
-                </RouterLink>
-                <ListItem onClick={handleLogout} disablePadding>
-                    <ListItemButton sx={{ textAlign: 'center' }}>
-                        <ListItemText primary={'Logout'} />
-                    </ListItemButton>
-                </ListItem>
+
             </List>
         </Box>
     );
@@ -85,11 +100,11 @@ export default function Navbar(props) {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar component="nav" position='sticky'>
-                <Toolbar>
+                <Toolbar sx={{justifyContent:'space-between'}}>
                     <Typography
                         variant="h6"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
+                        sx={{ display: { xs: 'block', sm: 'block' } }}
                     >
                         DoIE
                     </Typography>
@@ -110,6 +125,8 @@ export default function Navbar(props) {
                                 </Button>
                             </RouterLink>
                         ))}
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Button
                             id="basic-button"
                             aria-controls={menuopen ? 'basic-menu' : undefined}

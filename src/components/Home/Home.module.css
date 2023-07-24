@@ -1,0 +1,17 @@
+.overflow{
+    height: 457px;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+.overflow::-webkit-scrollbar{
+    width: 5px;
+}
+.overflow::-webkit-scrollbar-track{
+    width: 5px;
+    background-color: rgb(210, 207, 207);
+    border-radius: 10px;
+}
+.overflow::-webkit-scrollbar-thumb{
+    background-color: rgb(170, 168, 168);
+    border-radius: 10px;
+}

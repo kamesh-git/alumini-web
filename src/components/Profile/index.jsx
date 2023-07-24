@@ -17,6 +17,7 @@ import useFirebase from '../../context/useFirebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import LoginContextProvider from '../../context/LoginContextProvider';
+import NotifyEvents from '../NotifyEvents';
 
 
 
@@ -56,6 +57,7 @@ export default function Profile({ userdetails }) {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <NotifyEvents />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -81,7 +83,6 @@ export default function Profile({ userdetails }) {
                     label={item.label}
                     name={item.name}
                     autoComplete={false}
-                    autoFocus
                     variant='standard'
                   />
                 </Grid>)}

@@ -2,6 +2,7 @@ import React from 'react'
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
+import {  getStorage } from 'firebase/storage'
 
 const useFirebase = () => {
   const firebaseConfig = {
@@ -16,8 +17,9 @@ const useFirebase = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app)
   const db = getFirestore(app)
+  const storage = getStorage(app)
 
-  return { auth,db }
+  return { auth,db,storage }
 }
 
 export default useFirebase

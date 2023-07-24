@@ -30,72 +30,72 @@ export default function Signin() {
     const data = new FormData(event.currentTarget);
     const email = data.get('email')
     const password = data.get('password')
-    signInWithEmailAndPassword(auth, email, password).then(user => {
-      if(user){
-        setLogin(true)
-      }
-    })
-    
+    signInWithEmailAndPassword(auth, email, password)
+
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LoginIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            DoIE Alumini Association
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              type='email'
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-            <Grid container justifyContent={'center'}>
-              <Grid item>
-                <Link href='#' variant="body2">
-                  Forgot password?
-                </Link>
+      <Grid container sx={{ height: '100vh', margin: 'auto' }} alignItems={'center'} justifyContent={'space-around'}>
+        <Grid item xs={12} sm={6}>
+          <img style={{ width: '100%' }} src="/images/alumini.png" alt="" />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LoginIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              DoIE Alumini Association
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                type='email'
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container justifyContent={'center'}>
+                <Grid item>
+                  <Link href='#' variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Grid>
+      </Grid>
     </ThemeProvider>
   );
 }

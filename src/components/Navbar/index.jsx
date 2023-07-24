@@ -16,13 +16,15 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { Link as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink } from 'react-router-dom';
 import LoginContextProvider from '../../context/LoginContextProvider';
 import { signOut } from 'firebase/auth'
 import useFirebase from '../../context/useFirebase';
+import './index.css'
+import MenuListPopper from './MenuListPopper';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = ['Home', 'Contact'];
 
 export default function Navbar(props) {
     const { window } = props;
@@ -71,17 +73,17 @@ export default function Navbar(props) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <RouterLink onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/Profile'}>
+                <RouterLink className={'nav-link'} onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/Profile'}>
                     <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
                 </RouterLink>
-                <RouterLink onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/'}>
+                <RouterLink className={'nav-link'} onClick={handleDrawerToggle} style={{ textDecoration: 'none', color: 'inherit' }} to={'/sign-in'}>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </RouterLink>
             </Menu>
             <Divider />
             <List>
                 {navItems.map((item) => (
-                    <RouterLink onClick={handleDrawerToggle} key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
+                    <RouterLink className={'nav-link'} onClick={handleDrawerToggle} key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
                         <ListItem disablePadding>
                             <ListItemButton sx={{ textAlign: 'center' }}>
                                 <ListItemText primary={item} />
@@ -99,8 +101,8 @@ export default function Navbar(props) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar component="nav" position='sticky'>
-                <Toolbar sx={{justifyContent:'space-between'}}>
+            <AppBar color='transparent' sx={{ boxShadow: '0' }} component="nav" position='sticky'>
+                <Toolbar sx={{ justifyContent: 'space-between', padding: { xs: "0 0px" } }}>
                     <Typography
                         variant="h6"
                         component="div"
@@ -119,41 +121,15 @@ export default function Navbar(props) {
                     </IconButton>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <RouterLink key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={`/${item}`}>
-                                <Button sx={{ color: '#fff' }}>
+                            <RouterLink className={'nav-link'} key={item} style={{ textDecoration: 'none', color: 'inherit' }} to={item != "Home" ? `/${item}` : "/"}>
+                                <Button sx={{ color: '#000' }}>
                                     {item}
                                 </Button>
                             </RouterLink>
                         ))}
                     </Box>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        <Button
-                            id="basic-button"
-                            aria-controls={menuopen ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={menuopen ? 'true' : undefined}
-                            onClick={menuhandleClick}
-                        >
-                            <Avatar sx={{ bgcolor: 'transparent' }}>
-                                <AccountCircleOutlinedIcon />
-                            </Avatar>
-                        </Button>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={menuopen}
-                            onClose={menuhandleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/Profile'}>
-                                <MenuItem onClick={menuhandleClose}>Profile</MenuItem>
-                            </RouterLink>
-                            <RouterLink style={{ textDecoration: 'none', color: 'inherit' }} to={'/'}>
-                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                            </RouterLink>
-                        </Menu>
+                        <MenuListPopper handleLogout={handleLogout} />
                     </Box>
                 </Toolbar>
             </AppBar>

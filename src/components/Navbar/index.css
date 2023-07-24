@@ -1,0 +1,8 @@
+.nav-link.active button,.nav-link.active li{
+    color: var(--brand-color);
+}
+.nav-link button,.nav-link li{
+    font-size: larger;
+    font-weight: 600;
+    font-size:medium;
+}
